@@ -1,58 +1,48 @@
-import { TYPES } from "../actions/shoppingActions";
+import {
+  ADD_PILE_TO_CART,
+  REMOVE_ALL_PILE_FROM_CART,
+  REMOVE_ONE_PILE_FROM_CART,
+  ADD_ISOLATE_TO_CART,
+  REMOVE_ISOLATE_FROM_CART,
+  CLEAR_CART,
+  SET_PAYMENT_METHOD,
+  READ_ALL_PRODUCTS,
+  READ_ALL_PAYMENT_METHODS,
+  READ_ALL_CATEGORIES,
+} from "../types";
 
-export const shoppingInitialState = {
-  products: [
-    {
-      id: 1,
-      name: "Molida especial",
-      description: null,
-      price: "38.50",
-      barcode: "P0001",
-      units: "kg",
-      available: true,
-      created: "2022-05-13T10:56:13.956503-04:00",
-      updated: "2022-05-13T10:59:16.121696-04:00",
-      category: 1,
-    },
-    {
-      id: 2,
-      name: "Mayonesa",
-      description: null,
-      price: "10.00",
-      barcode: "12345678",
-      units: "u",
-      available: true,
-      created: "2022-05-13T10:56:35.031707-04:00",
-      updated: "2022-05-13T10:56:35.031735-04:00",
-      category: 2,
-    },
-    {
-      id: 3,
-      name: "Chuleta (Al Vacio)",
-      description: null,
-      price: "40.00",
-      barcode: "P00010080D94",
-      units: "u",
-      available: true,
-      created: "2022-05-13T10:57:34.995673-04:00",
-      updated: "2022-05-13T10:59:19.879405-04:00",
-      category: 1,
-    },
-  ],
+export const initialState = {
+  products: [],
   cart: [],
+  payment_methods: [],
+  categories: [],
+  payment_method_selected: 0,
   total: 0,
 };
 
-export function shoppingReducer(state, action) {
-  console.log(action.type);
+export function shoppingReducer(state = initialState, action) {
   switch (action.type) {
-    case TYPES.ADD_TO_CART: {
+    case ADD_ISOLATE_TO_CART: {
+      state = {
+        ...state,
+        cart: [...state.cart, {...action.payload, uid: Date.now()}],
+      };
+      break;
+    }
+    case REMOVE_ISOLATE_FROM_CART: {
+      state = {
+        ...state,
+        cart: state.cart.filter((item) => item.uid !== action.payload),
+      };
+      break;
+    }
+    case ADD_PILE_TO_CART: {
       let newItem = state.products.find(
         (product) => product.id === action.payload
       );
 
       let itemInCart = state.cart.find((item) => item.id === newItem.id);
-      return itemInCart
+      state = itemInCart
         ? {
             ...state,
             cart: state.cart.map((item) =>
@@ -62,34 +52,80 @@ export function shoppingReducer(state, action) {
             ),
           }
         : { ...state, cart: [...state.cart, { ...newItem, quantity: 1 }] };
+      break;
     }
-    case TYPES.REMOVE_ONE_FROM_CART: {
+    case REMOVE_ONE_PILE_FROM_CART: {
       let itemToDelete = state.cart.find((item) => item.id === action.payload);
-      return itemToDelete.quantity > 1
-        ? {
-            ...state,
-            cart: state.cart.map((item) =>
-              item.id === action.payload
-                ? { ...item, quantity: item.quantity - 1 }
-                : item
-            ),
-          }
-        : {
-            ...state,
-            cart: state.cart.filter((item) => item.id !== action.payload),
-          };
+      state =
+        itemToDelete.quantity > 1
+          ? {
+              ...state,
+              cart: state.cart.map((item) =>
+                item.id === action.payload
+                  ? { ...item, quantity: item.quantity - 1 }
+                  : item
+              ),
+            }
+          : {
+              ...state,
+              cart: state.cart.filter((item) => item.id !== action.payload),
+            };
+      break;
     }
-    case TYPES.REMOVE_ALL_FROM_CART:
-      return {
+    case REMOVE_ALL_PILE_FROM_CART:
+      state = {
         ...state,
         cart: state.cart.filter((item) => item.id !== action.payload),
       };
-    case TYPES.CLEAR_CART:
-      return shoppingInitialState;
-    case TYPES.TOTAL_AMOUNT:
-      return shoppingInitialState;
+      break;
+    case CLEAR_CART:
+      return {
+        ...state,
+        cart: initialState.cart,
+        total: initialState.total,
+      };
+    case SET_PAYMENT_METHOD:
+      // console.log(action.payload)
+      return {
+        ...state,
+        payment_method_selected: action.payload,
+      };
+    case READ_ALL_PRODUCTS:
+      return {
+        ...state,
+        products: [...action.payload],
+      };
+    case READ_ALL_PAYMENT_METHODS:
+      return {
+        ...state,
+        payment_methods: [...action.payload],
+      };
+    case READ_ALL_CATEGORIES:
+      return {
+        ...state,
+        categories: [...action.payload],
+      };
     default: {
       return state;
     }
+  }
+  // Calculating Total amount when the app has operations over the cart
+  if (
+    [
+      ADD_PILE_TO_CART,
+      REMOVE_ONE_PILE_FROM_CART,
+      REMOVE_ALL_PILE_FROM_CART,
+      ADD_ISOLATE_TO_CART,
+      REMOVE_ISOLATE_FROM_CART,
+    ].includes(action.type)
+  ) {
+    const total = state.cart.reduce(
+      (sum, val) => sum + Number(val.price) * Number(val.quantity),
+      0
+    );
+    return {
+      ...state,
+      total: `${total.toFixed(1)}0`,
+    };
   }
 }
