@@ -1,11 +1,7 @@
 import React, { useContext } from "react";
 import { Form, Button, Input } from "antd";
-// import { helpHttp } from "../helpers/helpHttp";
-// import { useNavigate } from "react-router-dom";
-// import { LOGIN_NOTIFICATION_DETAILS } from "../constants/textMessages";
-// import showNotification from "../components/ShowNotification";
-import UltrakarneLogo from "../logo_ultrakarne.svg";
-import AuthContext from "../AuthContext";
+import UltrakarneLogo from "../../../resources/logo_ultrakarne.svg";
+import AuthContext from "../context/AuthContext";
 
 const Login = () => {
   const [form] = Form.useForm();
@@ -26,7 +22,7 @@ const Login = () => {
   return (
     <div className="login">
       <div className="login-page">
-        <div className="logo">
+        <div className="login-logo">
           <img
             src={UltrakarneLogo}
             alt="Ultrakarne Logo"

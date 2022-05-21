@@ -1,8 +1,9 @@
 import React, { createContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { helpHttp } from "./helpers/helpHttp";
-import { LOGIN_NOTIFICATION_DETAILS } from "./constants/textMessages";
-import showNotification from "./components/ShowNotification";
+import { helpHttp } from "../../../utils/helpHttp";
+import { LOGIN_NOTIFICATION_DETAILS } from "../constants/textMessages";
+import showNotification from "../../../components/ShowNotification";
+import {LOGIN__AFTER_LOGIN} from "../../../constants";
 
 const AuthContext = createContext();
 
@@ -37,7 +38,7 @@ const AuthProvider = ({ children }) => {
         if (!res.err) {
           localStorage.setItem("temis_user", JSON.stringify(res));
           showNotification("success", LOGIN_NOTIFICATION_DETAILS.success);
-          navigate("/");
+          navigate(LOGIN__AFTER_LOGIN);
         } else {
           showNotification("error", LOGIN_NOTIFICATION_DETAILS.error);
         }

@@ -18,9 +18,9 @@ import {
   BarcodeOutlined,
   PoweroffOutlined,
 } from "@ant-design/icons";
-import UltrakarneLogo from "../logo_ultrakarne.svg";
-import img_chuleta from "../chuleta.jpeg";
-import AuthContext from "../AuthContext";
+import UltrakarneLogo from "../../../resources/logo_ultrakarne.svg";
+import img_chuleta from "../../../resources/chuleta.jpeg";
+import AuthContext from "../../account/context/AuthContext";
 // import img_molida from "../molida.jpeg";
 // import img_mayonesa from "../mayonesa.jpeg";
 
@@ -64,7 +64,7 @@ const ShoppingCart = () => {
   return (
     <div>
       <Row style={{ height: "100vh" }}>
-        <Col md={8} className="layout-left">
+        <Col md={8} className="shopping-cart-layout-left">
           <div className="logo">
             <div>
               <img
@@ -87,42 +87,8 @@ const ShoppingCart = () => {
             <div>Hola, {user.first_name}</div>
           </div>
           <div className="cart">
-            <Card>
-              <div className="cart-item">
-                <div className="cart-item-head">
-                  <div className="cart-item-title">
-                    Filete de res especial al Vacio
-                  </div>
-                  <div className="cart-item-price">140.50 Bs.</div>
-                </div>
-                <div className="cart-item-actions">
-                  <div>
-                    <Space>
-                      <Button
-                        shape="circle"
-                        icon={<PlusOutlined />}
-                        size="small"
-                      />
-                      <span>10</span>
-                      <Button
-                        shape="circle"
-                        icon={<MinusOutlined />}
-                        size="small"
-                      />
-                      <span>Units</span>
-                    </Space>
-                  </div>
-                  <div>
-                    <Button
-                      type="dashed"
-                      shape="circle"
-                      icon={<DeleteOutlined />}
-                      size="small"
-                    />
-                  </div>
-                </div>
-              </div>
-            </Card>
+
+
             <h2 className="cart-item-total">Total: 900.50 Bs.</h2>
           </div>
           <div className="cart-payment">
@@ -135,14 +101,14 @@ const ShoppingCart = () => {
           </div>
         </Col>
         <Col md={16}>
-          <div className="container-fluid">
+          <div className="shopping-cart-container-fluid">
             <div>
               <Input
                 placeholder="Buscar por codigo de barra"
                 prefix={<BarcodeOutlined />}
               />
             </div>
-            <div className="content">
+            <div className="shopping-cart-content">
               <Space>
                 <Button type="primary" shape="round">
                   Todos
@@ -157,9 +123,9 @@ const ShoppingCart = () => {
             <div className="content">
               <Row gutter={[24, 24]}>
                 <Col span={8}>
-                  <div className="product-item">
+                  <div className="product-item" onClick={showModalScale}>
                     <div className="product-item-price">10.50 Bs./Kg</div>
-                    <a onClick={showModalScale} href="/#">
+                    <div className="product-item-description">
                       <img
                         src={img_chuleta}
                         alt="Filete de carne de res especial al Vacio"
@@ -168,7 +134,7 @@ const ShoppingCart = () => {
                       <div className="product-item-title">
                         Filete de carne de res especial al Vacio
                       </div>
-                    </a>
+                    </div>
                   </div>
                 </Col>
                 <Col span={8}>

@@ -1,16 +1,14 @@
 import { Provider } from "react-redux";
-// import ShoppingCart from "./components/ShoppingCart";
-import Login from "./pages/Login";
-import ShoppingCart from "./pages/ShoppingCart";
-import Payment from "./components/Payment";
-import Weight from "./components/Weight";
-import "./App.less";
 import store from "./store";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-// import "antd/dist/antd.css";
-import "./temis.less";
-import { AuthProvider } from "./AuthContext";
-import ProtectedRoute from "./ProtectedRoute";
+import { AuthProvider } from "./apps/account/context/AuthContext";
+import ProtectedRoute from "./apps/account/context/ProtectedRoute";
+import "./App.less";
+import Login from "./apps/account/pages/Login";
+import "./apps/account/pages/Login.less"
+import ShoppingCart from "./apps/pos/pages/ShoppingCart";
+import "./apps/pos/pages/ShoppingCart.less"
+
 
 function App() {
   return (
@@ -19,17 +17,15 @@ function App() {
         <AuthProvider>
           <div>
             <Routes>
+              <Route path="/login/" element={<Login />} />
               <Route
-                path="/"
+                path="/pos/shopping-cart/"
                 element={
                   <ProtectedRoute>
                     <ShoppingCart />
                   </ProtectedRoute>
                 }
               />
-              <Route path="/login" element={<Login />} />
-              <Route path="/payment" element={<Payment />} />
-              <Route path="/weight/:id" element={<Weight />} />
             </Routes>
           </div>
         </AuthProvider>
