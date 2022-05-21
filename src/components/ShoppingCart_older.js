@@ -28,6 +28,8 @@ const ShoppingCart = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
+
+
   useEffect(() => {
     setLoading(true);
     helpHttp()
@@ -136,7 +138,8 @@ const ShoppingCart = () => {
         {products.map(
           (product) =>
             product.available &&
-            (product.category === selectedCategory || selectedCategory === 0) && (
+            (product.category === selectedCategory ||
+              selectedCategory === 0) && (
               <ProductItem
                 key={product.id}
                 data={product}

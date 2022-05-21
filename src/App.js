@@ -1,32 +1,34 @@
 import { Provider } from "react-redux";
-import ShoppingCart from "./components/ShoppingCart";
-import Payment from "./components/Payment";
-import Weight from "./components/Weight";
-import "./App.css";
 import store from "./store";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { AuthProvider } from "./apps/account/context/AuthContext";
+import ProtectedRoute from "./apps/account/context/ProtectedRoute";
+import "./App.less";
+import Login from "./apps/account/pages/Login";
+import "./apps/account/pages/Login.less"
+import ShoppingCart from "./apps/pos/pages/ShoppingCart";
+import "./apps/pos/pages/ShoppingCart.less"
+
 
 function App() {
   return (
     <Provider store={store}>
       <Router>
-        <div>
-          <nav>
-            <ul>
-              <li>
-                <Link to="/">Cart</Link>
-              </li>
-              <li>
-                <Link to="/payment">Payment</Link>
-              </li>
-            </ul>
-          </nav>
-          <Routes>
-            <Route path="/" element={<ShoppingCart />} />
-            <Route path="/payment" element={<Payment />} />
-            <Route path="/weight/:id" element={<Weight />} />
-          </Routes>
-        </div>
+        <AuthProvider>
+          <div>
+            <Routes>
+              <Route path="/login/" element={<Login />} />
+              <Route
+                path="/pos/shopping-cart/"
+                element={
+                  <ProtectedRoute>
+                    <ShoppingCart />
+                  </ProtectedRoute>
+                }
+              />
+            </Routes>
+          </div>
+        </AuthProvider>
       </Router>
     </Provider>
   );
