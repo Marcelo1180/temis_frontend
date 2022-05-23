@@ -1,6 +1,25 @@
 @import "~antd/lib/style/themes/default.less";
 @import "../../../resources/Temis.less";
 
+.cart-empty {
+  padding-top: 35px;
+}
+.cart-sell-button {
+}
+
+// Shopping cart
+.shopping-cart-header-actions {
+  display: flex;
+}
+.shopping-cart-header-actions div:first-child {
+  flex: 1 1 auto;
+
+}
+.shopping-cart-header-actions div:last-child {
+  padding-left: 10px;
+  flex: 0 0 auto;
+  text-align: right;
+}
 // Layout shopping cart
 .shopping-cart-container-fluid {
   padding: 15px;
@@ -14,6 +33,7 @@
 // Cart
 .cart {
   height: 84vh;
+  overflow: scroll;
 }
 .cart-payment {
   min-height: 8vh;

@@ -60,7 +60,6 @@ const Payment = () => {
       },
       product_orders,
     };
-    console.log(data);
     const options = {
       body: data,
       headers: { "content-type": "application/json" },

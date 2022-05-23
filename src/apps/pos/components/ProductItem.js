@@ -1,5 +1,3 @@
-import img_chuleta from "../../../resources/chuleta.jpeg";
-
 const ProductItem = ({ data, addToCart }) => {
   let { id, name, price, image } = data;
   return (

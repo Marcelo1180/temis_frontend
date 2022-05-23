@@ -26,7 +26,9 @@ const CartItem = ({
   }
   const buttons_weight_item = (
     <div className="cart-item-actions">
-      <div></div>
+      <div>
+        <span>{label_quantity}: {quantity} Kg</span>
+      </div>
       <div>
         <Button
           onClick={() => delWeightItemFromCart(uid)}

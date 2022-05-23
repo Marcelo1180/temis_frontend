@@ -1,55 +1,33 @@
 import React, { createContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { helpHttp } from "../../../utils/helpHttp";
 import { LOGIN_NOTIFICATION_DETAILS } from "../constants/textMessages";
 import showNotification from "../../../components/ShowNotification";
-import {LOGIN__AFTER_LOGIN} from "../../../constants";
+import { FRONT_AFTER_LOGIN, URL_LOGIN } from "../../../constants";
+import { apiPublic } from "../../../core/apiCall";
 
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
   const handleLogin = async (username, password) => {
-    const options = {
-      body: { username, password },
-      headers: { "content-type": "application/json" },
-    };
-
-    helpHttp()
-      .post("http://127.0.0.1:8000/account/v1/login/", options)
+    localStorage.removeItem("temis_token");
+    localStorage.removeItem("temis_user");
+    apiPublic
+      .post(URL_LOGIN, { username, password })
       .then((res) => {
-        if (!res.err) {
-          localStorage.setItem("temis_token", res.key);
-          const options = {
-            headers: {
-              Authorization: `Token ${res.key}`,
-              "content-type": "application/json",
-            },
-          };
-          return helpHttp().get(
-            "http://127.0.0.1:8000/account/v1/user/",
-            options
-          );
-        } else {
-          showNotification("error", LOGIN_NOTIFICATION_DETAILS.error);
-        }
+        localStorage.setItem("temis_token", res.data.key);
+        showNotification("success", LOGIN_NOTIFICATION_DETAILS.success);
+        navigate(FRONT_AFTER_LOGIN);
       })
-      .then((res) => {
-        if (!res.err) {
-          localStorage.setItem("temis_user", JSON.stringify(res));
-          showNotification("success", LOGIN_NOTIFICATION_DETAILS.success);
-          navigate(LOGIN__AFTER_LOGIN);
-        } else {
-          showNotification("error", LOGIN_NOTIFICATION_DETAILS.error);
-        }
+      .catch((err) => {
+        showNotification("error", LOGIN_NOTIFICATION_DETAILS.error);
       });
   };
   const handleLogout = () => {
-    console.log("out")
+    console.log("out");
   };
   const data = {
     token: localStorage.getItem("temis_token"),
-    user: JSON.parse(localStorage.getItem("temis_user")),
     onLogin: handleLogin,
     onLogout: handleLogout,
   };

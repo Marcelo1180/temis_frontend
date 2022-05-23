@@ -1,5 +1,5 @@
 import { Provider } from "react-redux";
-import store from "./store";
+import store from "./core/store";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./apps/account/context/AuthContext";
 import ProtectedRoute from "./apps/account/context/ProtectedRoute";
@@ -8,6 +8,7 @@ import Login from "./apps/account/pages/Login";
 import "./apps/account/pages/Login.less"
 import ShoppingCart from "./apps/pos/pages/ShoppingCart";
 import "./apps/pos/pages/ShoppingCart.less"
+import "./components/AppHeader.less"
 
 
 function App() {
