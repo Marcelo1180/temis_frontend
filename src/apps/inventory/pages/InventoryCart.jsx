@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Row, Col } from "antd";
-import CartList from "../components/CartList";
-import ProductList from "../components/ProductList";
-import Sell from "../components/Sell";
+import CartList from "../../common/components/CartList";
+import ProductList from "../../common/components/ProductList";
+import Sell from "../../common/components/Sell";
 import AppHeader from "../../../components/AppHeader";
 
-const ShoppingCart = () => {
+const InventoryCart = () => {
   return (
     <div>
       <Row>
@@ -30,4 +30,4 @@ const ShoppingCart = () => {
   );
 };
 
-export default ShoppingCart;
+export default InventoryCart;

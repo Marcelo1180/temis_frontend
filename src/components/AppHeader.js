@@ -18,7 +18,7 @@ const AppHeader = () => {
       })
       .catch((err) => {
         console.log(err);
-        if (err.response.status === 401) navigate(FRONT_REDIRECT_UNAUTHORIZED);
+        if (err.response.status === 401 || err.response.status === 0 ) navigate(FRONT_REDIRECT_UNAUTHORIZED);
       });
   }, []);
   const menu = (

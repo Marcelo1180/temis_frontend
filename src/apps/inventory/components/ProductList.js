@@ -119,7 +119,7 @@ const ProductList = () => {
             {products.map(
               (product) =>
                 product.available &&
-                // !product.vacuum_packed &&
+                !product.vacuum_packed &&
                 (product.category === selectedCategory ||
                   selectedCategory === 0) && (
                   <Col span={8} key={product.id}>
