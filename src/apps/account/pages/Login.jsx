@@ -57,10 +57,15 @@ const Login = () => {
                 },
               ]}
             >
-              <Input placeholder="input placeholder" />
+              <Input.Password placeholder="input placeholder" />
             </Form.Item>
             <Form.Item>
-              <Button shape="round" type="primary" onClick={onSubmit}>
+              <Button
+                shape="round"
+                type="primary"
+                onClick={onSubmit}
+                htmlType="submit"
+              >
                 Login
               </Button>
             </Form.Item>

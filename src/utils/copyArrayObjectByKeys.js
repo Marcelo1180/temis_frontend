@@ -5,7 +5,7 @@
  * @param {object} rename_keys A object with rename keys
  * @return {array} The array object filtered and with new keys
  */
-export const copyArrayObjectByKeys = (
+const copyArrayObjectByKeys = (
   array_object,
   filter_keys = [],
   rename_keys = {}
@@ -26,3 +26,4 @@ export const copyArrayObjectByKeys = (
     return array_object_filtered;
   }, []);
 };
+export default copyArrayObjectByKeys;
